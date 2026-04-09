@@ -37,9 +37,12 @@ export const registerUser = async (req, res) => {
             status: "success"
         })
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: error.message });
+    } catch (error) {
+        // Use a proper logger (e.g., winston, pino)
+        console.error("Registration error:", error);
+        res.status(500).json({ message: "Internal server error", status: "failed" });
     }
+}
 }
 
 export const loginUser = async (req, res) => {
@@ -54,18 +57,17 @@ export const loginUser = async (req, res) => {
         const user = await userModel.findOne({ email: email }).select("+password");
         if (!user) {
             return res.status(401).json({
-                message: "User Not exist",
+                message: "Invalid email or password",
                 status: "failed"
             })
         }
         const isPasswordValid = await user.comparePassword(password);
         if (!isPasswordValid) {
             return res.status(401).json({
-                message: "Invalid Password",
+                message: "Invalid email or password",
                 status: "failed"
             })
-        }
-        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "3d" })
+        } const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "3d" })
         res.cookie("token", token, {
             httpOnly: true,
             secure: true,
