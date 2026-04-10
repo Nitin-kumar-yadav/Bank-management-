@@ -1,5 +1,6 @@
 import userModel from "../model/user.model.js";
 import jwt from "jsonwebtoken";
+import { sendRegistrationEmail } from "../services/email.service.js";
 
 export const registerUser = async (req, res) => {
     try {
@@ -36,13 +37,11 @@ export const registerUser = async (req, res) => {
             message: "User registered successfully",
             status: "success"
         })
+        await sendRegistrationEmail(user.email, user.name);
     } catch (error) {
-    } catch (error) {
-        // Use a proper logger (e.g., winston, pino)
         console.error("Registration error:", error);
         res.status(500).json({ message: "Internal server error", status: "failed" });
     }
-}
 }
 
 export const loginUser = async (req, res) => {
