@@ -3,6 +3,13 @@ import nodemailer from "nodemailer";
 
 dotenv.config({});
 
+const requiredEnvVars = ['EMAIL_USER', 'CLIENT_ID', 'CLIENT_SECRET', 'REFRESH_TOKEN'];
+for (const envVar of requiredEnvVars) {
+    if (!process.env[envVar]) {
+        throw new Error(`Missing required environment variable: ${envVar}`);
+    }
+}
+
 const transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -13,7 +20,6 @@ const transporter = nodemailer.createTransport({
         refreshToken: process.env.REFRESH_TOKEN
     }
 })
-
 transporter.verify((error, success) => {
     if (error) {
         console.log("Error in email service", error);
@@ -47,7 +53,7 @@ export const sendRegistrationEmail = async (email) => {
         <h1>Welcome to Bank Transaction</h1>
         <p>Thank you for registering with Bank Transaction</p>
     `;
-    await sendEmail(email, subject, text, html);
+    return await sendEmail(email, subject, text, html);
 }
 
 export default sendEmail;
