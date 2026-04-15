@@ -6,7 +6,9 @@ const router = express.Router();
 
 
 
-router.post("/", authMiddleware, )
-
+router.post("/", authMiddleware, (req, res) => {
+    // TODO: Implement account creation logic
+    res.status(501).json({ message: "Not implemented" });
+});
 
 export default router
