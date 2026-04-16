@@ -1,9 +1,9 @@
 import jwt from "jsonwebtoken";
-import userModel from "../model/user.model";
+import userModel from "../model/user.model.js";
 
 
 
-async function authMiddleware(req, res, next){
+async function authMiddleware(req, res, next) {
     try {
         const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
         if (!token) {
