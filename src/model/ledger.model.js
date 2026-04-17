@@ -26,12 +26,11 @@ const ledgerSchema = new mongoose.Schema({
         enum: {
             values: ["DEBIT", "CREDIT"],
             message: "Type can be either DEBIT or CREDIT",
-            default: "DEBIT",
         },
+        default: "DEBIT",
         immutable: true,
         required: [true, "Type is required for creating a ledger entry"],
     },
-
 })
 
 function preventLedgerModification() {
@@ -39,12 +38,11 @@ function preventLedgerModification() {
 }
 
 ledgerSchema.pre("findOneAndUpdate", preventLedgerModification);
+ledgerSchema.pre("findOneAndUpdate", preventLedgerModification);
 ledgerSchema.pre("updateOne", preventLedgerModification);
+ledgerSchema.pre("updateMany", preventLedgerModification);
 ledgerSchema.pre("deleteMany", preventLedgerModification);
-ledgerSchema.pre("delete", preventLedgerModification);
 ledgerSchema.pre("findOneAndReplace", preventLedgerModification);
 ledgerSchema.pre("replaceOne", preventLedgerModification);
 ledgerSchema.pre("findOneAndDelete", preventLedgerModification);
-ledgerSchema.pre("deleteOne", preventLedgerModification);
-const ledgerModel = mongoose.model("ledger", ledgerSchema);
-export default ledgerModel;
+ledgerSchema.pre("deleteOne", preventLedgerModification); export default ledgerModel;

@@ -18,15 +18,13 @@ const transactionSchema = new mongoose.Schema({
         enum: {
             values: ["PENDING", "SUCCESS", "FAILED"],
             message: "Status can be either PENDING, SUCCESS or FAILED",
-            default: "PENDING",
-        }
-    },
-    amount: {
+        },
+        default: "PENDING",
+    }, amount: {
         type: Number,
         required: [true, "Amount is required for creating a transaction"],
-        min: [0, "Amount must be greater than or equal to 0"],
-    },
-    idempotencyKey: {
+        min: [1, "Amount must be greater than 0"],
+    }, idempotencyKey: {
         type: String,
         required: [true, "Idempotency key is required for creating a transaction"],
         unique: true,
