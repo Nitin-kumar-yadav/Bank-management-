@@ -1,7 +1,8 @@
 import accountModel from "../model/account.model.js";
 import transactionModel from "../model/transaction.model.js";
+import ledgerModel from "../model/ledger.model.js";
 import mongoose from "mongoose";
-
+import { sendTransactionEmail } from "../services/email.service.js";
 
 export const createTransaction = async (req, res) => {
     const { fromAccount, toAccount, amount, idempotencyKey } = req.body;
@@ -93,9 +94,9 @@ export const createTransaction = async (req, res) => {
         });
 
     } catch (error) {
+        console.error("Transaction creation failed:", error);
         await session.abortTransaction();
         session.endSession();
         return res.status(500).json({ message: "Internal server error" });
     }
-
 } 
