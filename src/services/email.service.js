@@ -56,4 +56,46 @@ export const sendRegistrationEmail = async (email) => {
     return await sendEmail(email, subject, text, html);
 }
 
+export const sendTransactionEmail = async (email, transaction, amount, toAccount, fromAccount, status, transactionId) => {
+    const subject = "Transaction Details";
+    const text = "Transaction Details";
+    const html = `
+        <h1>Your transaction has been processed successfully</h1>
+        <p>Transaction Details</p>
+        <p>Amount: ${amount}</p>
+        <p>From Account: ${fromAccount}</p>
+        <p>To Account: ${toAccount}</p>
+        <p>Transaction ID: ${transactionId}</p>
+    `;
+    return await sendEmail(email, subject, text, html);
+}
+
+export const sendTransactionFailedEmail = async (email, transaction, amount, toAccount, fromAccount, status, transactionId) => {
+    const subject = "Transaction Failed";
+    const text = "Transaction Failed";
+    const html = `
+        <h1>Your transaction has failed</h1>
+        <p>Transaction Details</p>
+        <p>Amount: ${amount}</p>
+        <p>From Account: ${fromAccount}</p>
+        <p>To Account: ${toAccount}</p>
+        <p>Transaction ID: ${transactionId}</p>
+    `;
+    return await sendEmail(email, subject, text, html);
+}
+
+export const sendTransactionRevertedEmail = async (email, transaction, amount, toAccount, fromAccount, status, transactionId) => {
+    const subject = "Transaction Reverted";
+    const text = "Transaction Reverted";
+    const html = `
+        <h1>Your transaction has been reverted</h1>
+        <p>Transaction Details</p>
+        <p>Amount: ${amount}</p>
+        <p>From Account: ${fromAccount}</p>
+        <p>To Account: ${toAccount}</p>
+        <p>Transaction ID: ${transactionId}</p>
+    `;
+    return await sendEmail(email, subject, text, html);
+}
+
 export default sendEmail;
