@@ -27,7 +27,6 @@ const ledgerSchema = new mongoose.Schema({
             values: ["DEBIT", "CREDIT"],
             message: "Type can be either DEBIT or CREDIT",
         },
-        default: "DEBIT",
         immutable: true,
         required: [true, "Type is required for creating a ledger entry"],
     },
@@ -45,4 +44,7 @@ ledgerSchema.pre("deleteMany", preventLedgerModification);
 ledgerSchema.pre("findOneAndReplace", preventLedgerModification);
 ledgerSchema.pre("replaceOne", preventLedgerModification);
 ledgerSchema.pre("findOneAndDelete", preventLedgerModification);
-ledgerSchema.pre("deleteOne", preventLedgerModification); export default ledgerModel;
+ledgerSchema.pre("deleteOne", preventLedgerModification);
+
+const ledgerModel = mongoose.model("ledger", ledgerSchema);
+export default ledgerModel;

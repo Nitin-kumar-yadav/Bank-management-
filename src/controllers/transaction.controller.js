@@ -49,4 +49,10 @@ export const createTransaction = async (req, res) => {
         }
     }
 
+    const balance = await fromUserAccount.getBalance();
+
+    if(balance < amount){
+        return res.status(400).json({ message: `Insufficient balance, Current balance is ${balance}. Requested amount is ${amount}` });
+    }
+
 } 
