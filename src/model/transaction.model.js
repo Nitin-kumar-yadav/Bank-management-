@@ -17,7 +17,7 @@ const transactionSchema = new mongoose.Schema({
         type: String,
         enum: {
             values: ["PENDING", "SUCCESS", "FAILED", "REVERTED"],
-            message: "Status can be either PENDING, SUCCESS or FAILED",
+            message: "Status can be either PENDING, SUCCESS, FAILED or REVERTED",
         },
         default: "PENDING",
     }, amount: {
