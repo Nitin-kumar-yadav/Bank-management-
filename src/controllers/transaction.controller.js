@@ -99,4 +99,22 @@ export const createTransaction = async (req, res) => {
         session.endSession();
         return res.status(500).json({ message: "Internal server error" });
     }
-} 
+}
+
+export const createInitialFundsTransaction = async (req, res) => {
+    const { toAccount, amount, idempotencyKey } = req.body;
+    if (!toAccount || !amount || !idempotencyKey) {
+        return res.status(400).json({ message: "toAccount, amount idempotencyKey are requird" });
+    }
+
+    const toUserAccount = await accountModel.findOne({
+        _id: toAccount,
+    })
+
+    if (!toUserAccount) {
+        return res.status(400).json({
+            message: "Invalid toAccount"
+        })
+    }
+
+}
